@@ -183,6 +183,11 @@ open class SCLAlertView: UIViewController {
           //Horizontal
           /// The subView's horizontal margin.
           public var horizontal: CGFloat = 12
+          
+          public var contentPaddingLeft: CGFloat
+          public var contentPaddingTop: CGFloat
+          public var contentPaddingRight: CGFloat
+          public var contentPaddingBottom: CGFloat
         
           public init(titleTop: CGFloat = 30,
                       textViewBottom: CGFloat = 12,
@@ -190,7 +195,11 @@ open class SCLAlertView: UIViewController {
                       textFieldSpacing: CGFloat = 15,
                       bottom: CGFloat = 14,
                       headerPadding: CGFloat = 15,
-                      horizontal: CGFloat = 12) {
+                      horizontal: CGFloat = 12,
+                      contentPaddingLeft: CGFloat = 16,
+                      contentPaddingTop: CGFloat = 18,
+                      contentPaddingRight: CGFloat = 16,
+                      contentPaddingBottom: CGFloat = 22) {
             self.titleTop = titleTop
             self.textViewBottom = textViewBottom
             self.buttonSpacing = buttonSpacing
@@ -198,6 +207,10 @@ open class SCLAlertView: UIViewController {
             self.bottom = bottom
             self.headerPadding = headerPadding
             self.horizontal = horizontal
+            self.contentPaddingLeft = contentPaddingLeft
+            self.contentPaddingTop = contentPaddingTop
+            self.contentPaddingRight = contentPaddingRight
+            self.contentPaddingBottom = contentPaddingBottom
           }
         }
 
@@ -436,8 +449,9 @@ open class SCLAlertView: UIViewController {
         }
         consumedHeight += (appearance.kTextFieldHeight + textFieldMargin) * CGFloat(inputs.count)
         consumedHeight += appearance.kTextViewdHeight * CGFloat(input.count)
+        consumedHeight += appearance.margin.contentPaddingTop + appearance.margin.contentPaddingBottom
         let maxViewTextHeight = maxHeight - consumedHeight
-        let viewTextWidth = subViewsWidth
+        let viewTextWidth = subViewsWidth - appearance.margin.contentPaddingLeft - appearance.margin.contentPaddingRight
         var viewTextHeight = appearance.kTextHeight
         
         // Check if there is a custom subview and add it over the textview
@@ -478,10 +492,10 @@ open class SCLAlertView: UIViewController {
         labelTitle.frame = labelTitle.frame.offsetBy(dx: 0, dy: titleOffset)
         
         // Subtitle
-        y = titleActualHeight > 0 ? appearance.margin.titleTop + titleActualHeight + titleOffset + appearance.margin.headerPadding * 2 : defaultTopOffset
-        viewText.frame = CGRect(x:appearance.margin.horizontal, y:y, width: viewTextWidth, height:viewTextHeight)
+        y = titleActualHeight > 0 ? appearance.margin.titleTop + titleActualHeight + titleOffset + appearance.margin.headerPadding * 2 + appearance.margin.contentPaddingTop : defaultTopOffset
+        viewText.frame = CGRect(x:appearance.margin.horizontal + appearance.margin.contentPaddingLeft, y:y, width: viewTextWidth, height:viewTextHeight)
         // Text fields
-        y += viewTextHeight
+        y += viewTextHeight + appearance.margin.contentPaddingBottom
         y += viewText.text.isEmpty ? 0 : appearance.margin.textViewBottom // only viewText.text is not empty should have margin.
       
         for txt in inputs {
