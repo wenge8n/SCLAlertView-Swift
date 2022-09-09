@@ -322,6 +322,7 @@ open class SCLAlertView: UIViewController {
     var viewText = UITextView()
     var contentView = UIView()
     var headerView = UIView()
+    var divider = UIView()
     var circleBG = UIView(frame:CGRect(x:0, y:0, width:kCircleHeightBackground, height:kCircleHeightBackground))
     var circleView = UIView()
     var circleIconView : UIView?
@@ -374,6 +375,7 @@ open class SCLAlertView: UIViewController {
         contentView.addSubview(headerView)
         contentView.addSubview(labelTitle)
         contentView.addSubview(viewText)
+        contentView.addSubview(divider)
         // Circle View
         circleBG.backgroundColor = appearance.circleBackgroundColor
         circleBG.layer.cornerRadius = circleBG.frame.size.height / 2
@@ -403,6 +405,7 @@ open class SCLAlertView: UIViewController {
         // Colours
         contentView.backgroundColor = appearance.contentViewColor
         viewText.backgroundColor = appearance.contentViewColor
+        divider.backgroundColor = UIColorFromRGB(0xF2F2F2)
         labelTitle.textColor = appearance.titleColor
         viewText.textColor = appearance.subTitleColor
         contentView.layer.borderColor = appearance.contentViewBorderColor.cgColor
@@ -441,6 +444,7 @@ open class SCLAlertView: UIViewController {
         
         let buttonMargin = appearance.margin.buttonSpacing
         let textFieldMargin = appearance.margin.textFieldSpacing
+        let dividerHeight = 1.0
         if appearance.buttonsLayout == .vertical {
             consumedHeight += appearance.kButtonHeight * CGFloat(buttons.count)
             consumedHeight += buttonMargin * (CGFloat(buttons.count) - 1)
@@ -450,6 +454,7 @@ open class SCLAlertView: UIViewController {
         consumedHeight += (appearance.kTextFieldHeight + textFieldMargin) * CGFloat(inputs.count)
         consumedHeight += appearance.kTextViewdHeight * CGFloat(input.count)
         consumedHeight += appearance.margin.contentPaddingTop + appearance.margin.contentPaddingBottom
+        consumedHeight += dividerHeight
         let maxViewTextHeight = maxHeight - consumedHeight
         let viewTextWidth = subViewsWidth - appearance.margin.contentPaddingLeft - appearance.margin.contentPaddingRight
         var viewTextHeight = appearance.kTextHeight
@@ -508,6 +513,11 @@ open class SCLAlertView: UIViewController {
             //txt.layer.cornerRadius = fieldCornerRadius
             y += appearance.kTextViewdHeight
         }
+        
+        // Divider
+        divider.frame = CGRect(x: 0, y: y, width: appearance.kWindowWidth, height: dividerHeight)
+        y += dividerHeight
+        
         // Buttons
         var buttonX = appearance.margin.horizontal
         switch appearance.buttonsLayout {
