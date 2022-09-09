@@ -905,7 +905,8 @@ open class SCLAlertView: UIViewController {
                 btn.backgroundColor = customBackgroundColor
             } else {
                 // Use default BackgroundColor derived from AlertStyle
-                btn.backgroundColor = viewColor
+                // btn.backgroundColor = viewColor
+                btn.backgroundColor = .clear
             }
             
             if let customTextColor = btn.customTextColor {
@@ -913,7 +914,8 @@ open class SCLAlertView: UIViewController {
                 btn.setTitleColor(customTextColor, for:UIControlState())
             } else {
                 // Use default BackgroundColor derived from AlertStyle
-                btn.setTitleColor(UIColorFromRGB(colorTextButton ?? 0xFFFFFF), for:UIControlState())
+                // btn.setTitleColor(UIColorFromRGB(colorTextButton ?? 0xFFFFFF), for:UIControlState())
+                btn.setTitleColor(UIColorFromRGB(0x343434), for:UIControlState())
             }
         }
         
